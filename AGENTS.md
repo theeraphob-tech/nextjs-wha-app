@@ -47,3 +47,9 @@ Prisma is a MariaDB client (despite `provider = "mysql"` in schema). Generated c
 ## Docker
 
 `Dockerfile` exists for containerized deployment.
+
+## ข้อกำหนดในการเขียนโค๊ด
+
+- แยก TypeScript Type ทุกอย่าง ออกไปไว้ที่โฟลเดอร์ scr/types
+- การตั้งชื่อไฟล์ Typescript (.ts) ให้ตั้งตามตัวอย่างนี้คือ course-service.ts
+- ห้ามใช้คำสั่ง npx prisma db push
