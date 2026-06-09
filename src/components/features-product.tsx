@@ -30,7 +30,7 @@ const FeaturesProduct = ({ products }: Props) => {
   return (
     <section className="mx-auto flex max-w-7xl flex-col px-6 py-14 sm:py-20">
       <h2 className="text-pretty text-center font-medium text-4xl tracking-[-0.04em] sm:text-[2.75rem]">
-        สินค้าทั้งหมด
+        สินค้าของเราทั้งหมด
       </h2>
 
       {products.length === 0 ? (
