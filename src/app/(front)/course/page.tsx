@@ -1,5 +1,5 @@
 import FeaturesCourse from "@/components/features-course";
-import { fetchCourses } from "@/Services/course-service";
+import { fetchCourses } from "@/services/course-service";
 
 // http://localhost:3000/course
 export default async function CoursePage() {
