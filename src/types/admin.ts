@@ -21,3 +21,19 @@ export type AdminOrderItem = {
 }
 
 export type Period = "7d" | "30d" | "90d"
+
+export type ApiResponse<T> = { success: true; data: T } | { success: false; error: string }
+
+export type AdminProduct = {
+  id: number
+  name: string
+  description: string | null
+  price: number
+  categoryId: number
+  categoryName: string
+}
+
+export type CategoryOption = {
+  id: number
+  name: string
+}

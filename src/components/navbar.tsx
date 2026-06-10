@@ -7,6 +7,7 @@ import { Badge } from "./ui/badge";
 import { ShoppingBasket } from "lucide-react";
 import CountCartItem from "@/app/(front)/components/CountCartItem";
 import { auth } from "@/lib/auth";
+import prisma from "@/lib/prisma";
 import { headers } from "next/headers";
 import LogoutButton from "./logout-button";
 
@@ -14,6 +15,15 @@ const Navbar = async () => {
   const session = await auth.api.getSession({
     headers: await headers()
   });
+
+  let isAdmin = false
+  if (session) {
+    const user = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      select: { role: true },
+    })
+    isAdmin = user?.role === "admin"
+  }
 
   return (
     <nav className="h-16 border-b bg-background">
@@ -47,6 +57,11 @@ const Navbar = async () => {
           {
             session && (
               <>
+                {isAdmin && (
+                  <Button asChild variant="outline" size="sm">
+                    <Link href="/dashboard">จัดการ</Link>
+                  </Button>
+                )}
                 <div className="flex items-center mr-4">
                   สวัสดี, {session.user.name}
                 </div>
