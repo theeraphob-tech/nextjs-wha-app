@@ -22,8 +22,9 @@ export default function Hero() {
           Ship better UI without&nbsp;the&nbsp;hassle
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-muted-foreground text-xl md:text-2xl/normal">
-          Instead of starting from scratch every time, use thoughtfully designed
-          blocks that give you a solid foundation for any UI.
+          HELLO WORLD! This is a starter template for building a Next.js app with the WHA UI component library. 
+          It includes everything you need to get started quickly and easily, 
+          so you can focus on building your app instead of setting up the infrastructure.
         </p>
         <div className="mt-12 flex items-center justify-center gap-4">
           <Button className="rounded-full" size="lg">
