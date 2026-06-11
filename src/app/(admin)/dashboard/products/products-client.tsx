@@ -1,10 +1,9 @@
 "use client"
 
-import { useEffect, useState, useCallback } from "react"
+import { useEffect, useState, useCallback, useRef } from "react"
 import {
   RiAddLine,
   RiSearchLine,
-  RiRefreshLine,
   RiArrowLeftSLine,
   RiArrowRightSLine,
   RiPencilLine,
@@ -49,7 +48,6 @@ function ProductsClient() {
   }, [inputVal])
 
   const fetchProducts = useCallback(async () => {
-    setLoading(true)
     try {
       const params = new URLSearchParams({ page: String(page), limit: String(limit) })
       if (search) params.set("search", search)
@@ -67,23 +65,32 @@ function ProductsClient() {
     }
   }, [page, search])
 
-  const fetchCategories = useCallback(async () => {
-    try {
-      const res = await fetch("/api/admin/categories")
-      const body = await res.json()
-      if (body.success) setCategories(body.data)
-    } catch {
-      setCategories([])
-    }
-  }, [])
+  const categoriesLoaded = useRef(false)
 
   useEffect(() => {
-    fetchProducts()
-  }, [fetchProducts])
+    const params = new URLSearchParams({ page: String(page), limit: String(limit) })
+    if (search) params.set("search", search)
 
-  useEffect(() => {
-    fetchCategories()
-  }, [fetchCategories])
+    Promise.all([
+      fetch(`/api/admin/products?${params}`).then((r) => r.json()),
+      categoriesLoaded.current
+        ? Promise.resolve(null)
+        : fetch("/api/admin/categories").then((r) => r.json()),
+    ]).then(([productsBody, categoriesBody]) => {
+      if (productsBody.success) {
+        setProducts(productsBody.data)
+        setTotal(productsBody.total)
+        setTotalPages(productsBody.totalPages)
+      } else {
+        setProducts([])
+      }
+      if (categoriesBody?.success) {
+        setCategories(categoriesBody.data)
+        categoriesLoaded.current = true
+      }
+      setLoading(false)
+    })
+  }, [page, search])
 
   return (
     <div data-slot="products-page" className="space-y-6">
